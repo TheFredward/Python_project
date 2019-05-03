@@ -12,6 +12,8 @@ TODO
 - get familiar with python. 
 - project on Git
 - create a simple application (eg. an window with a single button)
+- should have a reaction after button, as in show an alert box notifying that the button has been clicked.
 - add password and username (save locally or on cloud?)
+    - Start locally
 - Disscuss what features to add. 
 
