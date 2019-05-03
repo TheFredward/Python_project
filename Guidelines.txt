@@ -1,0 +1,17 @@
+PROJECT	
+
+Hamza and Freddie 
+_______________________
+
+5/3/2019
+
+- create a windows application that gets unlocked by facial recognition and/or password. 
+- Enitrely based on python.
+
+TODO
+- get familiar with python. 
+- project on Git
+- create a simple application (eg. an window with a single button)
+- add password and username (save locally or on cloud?)
+- Disscuss what features to add. 
+
