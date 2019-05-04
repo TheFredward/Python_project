@@ -45,3 +45,31 @@ while not GV:
     else:
         x_pos += 3;
         eX_pos += 1;
+# NOTE: Function global scope references
+status = 0;
+
+def move():
+    # global keyword allows us to refer to status which
+    # is outside the scope of move
+    global status;
+    status += 1;
+move();
+print(status)
+# NOTE: Classes and objects
+# NOTE: this class defines an object's attributes and behaviours
+class PracticeClass:
+    # NOTE: the constructor init creates a new instance and sets up the defined fields
+    def __init__(self,name,size,stat):
+        # creating a new instance and passing the values to a variable
+        self.name = name;
+        self.size = size;
+        self.stat = stat;
+    # NOTE: showStat is a method that usually modifies the classes fields
+    def showStat(self, by_size, by_stat):
+        self.by_size += by_size
+        self.by_stat += by_stat
+    # we never call the global keywork since we are creating the variables once we make the  new instance
+# firstTime is an object of the class PracticeClass
+firstTime = PracticeClass('Fredward', 100, 25);
+# notice that we never created a global variable called name, instead it was created in the constructor for the class PracticeClass
+print(firstTime.name)
