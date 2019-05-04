@@ -77,3 +77,15 @@ print(firstTime.name)
 firstTime.showStat(55,33)
 print(firstTime.size)
 print(firstTime.stat)
+# Subclasses, superclasses, and inheritance
+# NOTE: subclasses inherit from superclasses not the other way around
+class SecondClassPractice(PracticeClass):
+    def __init__(self,name,size,stat):
+            # # NOTE: self is only needed in the def __init__ the super notation will pass the values from this class to the superclass. We could also pass to showStat by saying "super().showStat"
+        super().__init__(name,size,stat);
+
+
+secondClass = SecondClassPractice('Hamza',75,100)
+# NOTE: the showStat was inherited from PracticeClass therefore is usable in SecondClassPractice without explicitly declaring the method in the class
+secondClass.showStat(90,18)
+print(secondClass.name)
