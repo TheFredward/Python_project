@@ -66,10 +66,14 @@ class PracticeClass:
         self.stat = stat;
     # NOTE: showStat is a method that usually modifies the classes fields
     def showStat(self, by_size, by_stat):
-        self.by_size += by_size
-        self.by_stat += by_stat
+        self.size += by_size
+        self.stat += by_stat
     # we never call the global keywork since we are creating the variables once we make the  new instance
 # firstTime is an object of the class PracticeClass
 firstTime = PracticeClass('Fredward', 100, 25);
 # notice that we never created a global variable called name, instead it was created in the constructor for the class PracticeClass
 print(firstTime.name)
+# calling the method that was created is simple as using the . notation
+firstTime.showStat(55,33)
+print(firstTime.size)
+print(firstTime.stat)
