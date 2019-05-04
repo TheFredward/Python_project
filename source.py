@@ -28,16 +28,20 @@ print(dictionaries['p2'])
 # while # NOTE: continues to iterate until it is true
 GV = False;
 x_pos = 2;
-eX_pos = 10;
+eX_pos = 3;
+final_pos = 12;
 while not GV:
-    print('x_pos: ' + x_pos);
-    print('eX_pos: ' + eX_pos);
+    print('x_pos: ');
+    print( x_pos);
+    print('\n')
+    print('eX_pos: ');
+    print(eX_pos)
     if x_pos == eX_pos:
         print('You lose')
         GV = True;
-    elif x_pos >= eX_pos:
+    elif x_pos >= final_pos:
         print('You win')
         GV = True
     else:
-        x_pos += 2;
+        x_pos += 3;
         eX_pos += 1;
