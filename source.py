@@ -33,8 +33,9 @@ class StartScreen(object):
             time_interval.tick(self.time_rate)
 # NOTE: after importing pygame, initialize pygame
 pygame.init()
-
+# CREATE a new object from the class StartScreen and pass in the necessary values for the __init__
 newScreen = StartScreen(screen,S_WIDTH,S_HEIGHT)
+# call the loadScreen on the variable created from the StartScreen class
 newScreen.loadScreen()
 # we need to end pygame and quit
 pygame.quit()
