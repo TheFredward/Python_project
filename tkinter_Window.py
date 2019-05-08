@@ -5,8 +5,17 @@ import time
 window = Tk()                               #Parent Window
 window.geometry("1600x800+0+0")
 window.title("Testing Window")
+# class FrameSetup():
+#     mRelief = SUNKEN
+#     def __init__(self,mWindow,mHeight, mWidth,mBg):
+#         self.mWindow = mWindow
+#         self.mWidth = mWidth
+#         self.mHeight = mHeight
+#         self.mBg = mBg
+#     def setFrame(self):
+#         Frame(mWindow, height = self.mHeight,width = self.mWidth, bg=self.mBg, relief=mRelief)
 
-FrameOne = Frame(window, width = 1600, bg="blue", relief=SUNKEN)
+FrameOne = Frame(window,height = 0, width = 1600, bg="blue", relief=SUNKEN)
 FrameOne.pack(side=TOP)
 
 FrameTwo = Frame(window, height = 700, width = 800, bg="blue", relief=SUNKEN)
@@ -36,25 +45,30 @@ def buttonClick(numbers):
     operator = operator + str(numbers)
     text_Input.set(operator)
     return;
-
-def OKClick():
+# shold pass choice password, and the password itself so that we can recall it later
+def OKClick(passChoice):
+    # get value and store in passChoice
+    print(passChoice)
+    # have an empty dictionary to save the password but not sure if it will create a new one each time....
+    passwordKeys = {}
     # check that operator is not null
-    if operator is '':
-        level = Toplevel()
-        displayString = Label(level,text= operator, height = 800,width = 400)
-        displayString.pack()
+    if len(operator) > 0:
+        passwordKeys = dict([(passChoice,operator)])
+        print(passwordKeys)
     else:
+        print('No value has been input')
         return;
-
 def DeleteClick():
     global operator
     operator = operator[:-1]
     text_Input.set(operator)
     return;
 
+
 class CreateButton():
     """Doc: Class that will be used to create numerical keys and later alphabet keys to display and save the values in dictionaries so that they can be refered back via keys (for the time being)"""
     # local variables in create button class
+    vark = StringVar(window)
     padx = 20
     pady = 16
     bd = 4
@@ -68,22 +82,22 @@ class CreateButton():
         self.mColumn = mColumn
     def passButtonVal(self):
         okayButton = Button(self.frameNmbr, padx = self.padx, pady = self.pady, bd = self.bd, fg = self.fg, font = self.mFont, text = self.mText, bg = self.mBg, command = lambda: buttonClick(self.mText)).grid(row=self.mRow, column = self.mColumn, sticky="ew")
+        # the enterButton specially made due to the command being different as well as the deleteButton. The OkClick should pass the passwordSelected choice but doesn't at the moment...only passses the firstLabel
     def enterButton(self):
-        okayButton = Button(self.frameNmbr, padx = self.padx, pady = self.pady, bd = self.bd, fg = self.fg, font = self.mFont, text = self.mText, bg = self.mBg, command = lambda:  OKClick()).grid(row=self.mRow, column= self.mColumn, sticky="ew")
+        okayButton = Button(self.frameNmbr, padx = self.padx, pady = self.pady, bd = self.bd, fg = self.fg, font = self.mFont, text = self.mText, bg = self.mBg, command = lambda:  OKClick(mPassChoice)).grid(row=self.mRow, column= self.mColumn, sticky="ew")
     def deleteButton(self):
         okayButton = Button(self.frameNmbr, padx = self.padx, pady = self.pady, bd = self.bd, fg = self.fg, font = self.mFont, text = self.mText, bg = self.mBg, command = lambda: DeleteClick()).grid(row= self.mRow, column= self.mColumn, sticky="ew")
-# okayButton = Button(FrameThree, padx=20, pady=16, bd = 4, fg = "black", font = ('arial', 15), text = "1", bg = "gray", command = lambda: buttonClick("1")).grid(row=1, column=0, sticky="ew")
-# okayButton = Button(FrameThree, padx=20, pady=16, bd = 4, fg = "black", font = ('arial', 15), text = "2", bg = "gray", command = lambda: buttonClick("2")).grid(row=1, column=1, sticky="ew")
-# okayButton = Button(FrameThree, padx=20, pady=16, bd = 4, fg = "black", font = ('arial', 15), text = "3", bg = "gray", command = lambda: buttonClick("3")).grid(row=1, column=2, sticky="ew")
-# okayButton = Button(FrameThree, padx=20, pady=16, bd = 4, fg = "black", font = ('arial', 15), text = "4", bg = "gray", command = lambda: buttonClick("4")).grid(row=2, column=0, sticky="ew")
-# okayButton = Button(FrameThree, padx=20, pady=16, bd = 4, fg = "black", font = ('arial', 15), text = "5", bg = "gray", command = lambda: buttonClick("5")).grid(row=2, column=1, sticky="ew")
-# okayButton = Button(FrameThree, padx=20, pady=16, bd = 4, fg = "black", font = ('arial', 15), text = "6", bg = "gray", command = lambda: buttonClick("6")).grid(row=2, column=2, sticky="ew")
-# okayButton = Button(FrameThree, padx=20, pady=16, bd = 4, fg = "black", font = ('arial', 15), text = "7", bg = "gray", command = lambda: buttonClick("7")).grid(row=3, column=0, sticky="ew")
-# okayButton = Button(FrameThree, padx=20, pady=16, bd = 4, fg = "black", font = ('arial', 15), text = "8", bg = "gray", command = lambda: buttonClick("8")).grid(row=3, column=1, sticky="ew")
-# okayButton = Button(FrameThree, padx=20, pady=16, bd = 4, fg = "black", font = ('arial', 15), text = "9", bg = "gray", command = lambda: buttonClick("9")).grid(row=3, column=2, sticky="ew")
-# okayButton = Button(FrameThree, padx=20, pady=16, bd = 4, fg = "black", font = ('arial', 15), text = "OK", bg = "gray", command = lambda: OKClick()).grid(row=4, column=0, sticky="ew")
-# okayButton = Button(FrameThree, padx=20, pady=16, bd = 4, fg = "black", font = ('arial', 15), text = "0", bg = "gray", command = lambda: buttonClick("0")).grid(row=4, column=1, sticky="ew")
-# okayButton = Button(FrameThree, padx=20, pady=16, bd = 4, fg = "black", font = ('arial', 15), text = "<-", bg = "gray", command = lambda: DeleteClick()).grid(row=4, column=2, sticky="ew")
+    # dropDownMenu used to select password save position for retrival later on
+    def dropDownMenu(self):
+        vark = StringVar(window)
+        PASSCHOICE = ['Select Password','pass1','pass2','pass2']
+        vark.set(PASSCHOICE[0])
+        w = OptionMenu(window,vark,*PASSCHOICE)
+        w.pack()
+        # made mPasschoice global due to scope issues, need to correct this later on or problems will occur, such as other methods/functions being able to access this variables
+        global mPassChoice
+        mPassChoice = vark.get()
+
 # initialize all buttons using CreateButton class and pass the necessary values that are needed
 okayButton1 = CreateButton(FrameThree,"1",1,0)
 okayButton2 = CreateButton(FrameThree,"2",1,1)
@@ -97,6 +111,9 @@ okayButton9 = CreateButton(FrameThree,"9",3,2)
 okayButton = CreateButton(FrameThree,"OK",4,0)
 okayButton0 = CreateButton(FrameThree,"0",4,1)
 okayButton_bckspc = CreateButton(FrameThree,"<-",4,2)
+# create a password select dropdown menu as a CreateButton
+passwordSelect = CreateButton(FrameThree,'Select Password',5,1)
+passwordSelect.dropDownMenu()
 okayButton1.passButtonVal()
 okayButton2.passButtonVal()
 okayButton3.passButtonVal()
