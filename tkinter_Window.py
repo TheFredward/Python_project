@@ -3,11 +3,12 @@ import random
 import time
 from Dictionary import Dictionary
 
+
 window = Tk()                               #Parent Window
 window.geometry("1600x800+0+0")
 window.title("Testing Window")
 list = []
-DC = Dictionary()
+DC = Dictionary();
 # class FrameSetup():
 #     mRelief = SUNKEN
 #     def __init__(self,mWindow,mHeight, mWidth,mBg):
@@ -42,11 +43,12 @@ txtDisplay = Entry(FrameThree, font=('arial', 15), textvariable = text_Input, bd
 txtDisplay.grid(columnspan=4, row = 0, column = 0)
 IDLabel = Label(FrameFour, font=('arial', 20, 'bold'), text="Enter ID Number", fg = "Black", bd = 10, anchor = 'w')
 IDLabel.grid(row = 0, column = 6)
-
+#DC = Dictionary(operator)
 def buttonClick(numbers):
     global operator
     operator = operator + str(numbers)
     text_Input.set(operator)
+
     return;
 # shold pass choice password, and the password itself so that we can recall it later
 def OKClick(passChoice):
@@ -56,7 +58,7 @@ def OKClick(passChoice):
     # have an empty dictionary to save the password but not sure if it will create a new one each time....
     passwordKeys = {}
     # check that operator is not null
-    DC.AddToArray(operator, list)
+
     if len(operator) > 0:
         passwordKeys = dict([(passChoice,operator)])
         print(passwordKeys)
@@ -67,9 +69,15 @@ def DeleteClick():
     global operator
     operator = operator[:-1]
     text_Input.set(operator)
-    DC.PrintList(list)
     return;
 
+def AddClick():
+    global operator
+    DC.AddToArray(operator, list)
+    DC.PrintList(list)
+    operator = " "
+    text_Input.set(operator)
+    return;
 
 class CreateButton():
     """Doc: Class that will be used to create numerical keys and later alphabet keys to display and save the values in dictionaries so that they can be refered back via keys (for the time being)"""
@@ -93,6 +101,8 @@ class CreateButton():
         okayButton = Button(self.frameNmbr, padx = self.padx, pady = self.pady, bd = self.bd, fg = self.fg, font = self.mFont, text = self.mText, bg = self.mBg, command = lambda:  OKClick(mPassChoice)).grid(row=self.mRow, column= self.mColumn, sticky="ew")
     def deleteButton(self):
         okayButton = Button(self.frameNmbr, padx = self.padx, pady = self.pady, bd = self.bd, fg = self.fg, font = self.mFont, text = self.mText, bg = self.mBg, command = lambda: DeleteClick()).grid(row= self.mRow, column= self.mColumn, sticky="ew")
+    def AddButton(self):
+        okayButton = Button(self.frameNmbr, padx = self.padx, pady = self.pady, bd = self.bd, fg = self.fg, font = self.mFont, text = self.mText, bg = self.mBg, command = lambda: AddClick()).grid(row= self.mRow, column= self.mColumn, columnspan=3, sticky="ew")
     # dropDownMenu used to select password save position for retrival later on
     def dropDownMenu(self):
         vark = StringVar(window)
@@ -103,6 +113,8 @@ class CreateButton():
         # made mPasschoice global due to scope issues, need to correct this later on or problems will occur, such as other methods/functions being able to access this variables
         global mPassChoice
         mPassChoice = vark.get()
+
+
 
 # initialize all buttons using CreateButton class and pass the necessary values that are needed
 okayButton1 = CreateButton(FrameThree,"1",1,0)
@@ -116,6 +128,7 @@ okayButton8 = CreateButton(FrameThree,"8",3,1)
 okayButton9 = CreateButton(FrameThree,"9",3,2)
 okayButton = CreateButton(FrameThree,"OK",4,0)
 okayButton0 = CreateButton(FrameThree,"0",4,1)
+okayButtonAdd = CreateButton(FrameThree, "Add", 5, 0)
 okayButton_bckspc = CreateButton(FrameThree,"<-",4,2)
 # create a password select dropdown menu as a CreateButton
 passwordSelect = CreateButton(FrameThree,'Select Password',5,1)
@@ -131,5 +144,6 @@ okayButton8.passButtonVal()
 okayButton9.passButtonVal()
 okayButton.enterButton()
 okayButton0.passButtonVal()
+okayButtonAdd.AddButton()
 okayButton_bckspc.deleteButton()
 window.mainloop()
