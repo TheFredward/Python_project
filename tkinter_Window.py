@@ -3,7 +3,7 @@ import random
 import time
 from Dictionary import Dictionary
 
-
+'''This is going to focus on the multi_window concept and focus on getting windows from different files within the same folder and properly displaying them'''
 window = Tk()                               #Parent Window
 window.geometry("1600x800+0+0")
 window.title("Testing Window")
