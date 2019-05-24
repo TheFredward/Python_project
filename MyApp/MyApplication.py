@@ -22,7 +22,7 @@ class MyApplication(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (MainView, LoginView):
+        for F in (MainView, LoginView, CreateAccountView):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -105,21 +105,14 @@ class MainView(tk.Frame):
             self.operator = " "
             self.text_Input.set(self.operator)
             return;
-        # loginPage.show()
 
 
 class LoginView(tk.Frame):
 
-
-    #print (LoginCredentials)
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        # LoginCredentials = {
-        #                 "hamzam":"9035712357",
-        #                 "freddiev":"4692267036"
-        #                 }
         self.usernametext = tk.StringVar()
         self.username = ""
         self.passwordtext = tk.StringVar()
@@ -137,17 +130,22 @@ class LoginView(tk.Frame):
         LoginButton = tk.Button(self, text="Login",command=lambda: CheckCredentials())
         LoginButton.grid(columnspan=3, row = 7, column = 5, sticky = "ew")
 
+        CreateButton = tk.Button(self, text="Create Account",command=lambda: CreateAccountClick())
+        CreateButton.grid(columnspan=3, row = 7, column = 8, sticky = "ew")
+
         UsernameInput = tk.Entry(self, font=('arial', 15), textvariable = self.usernametext, bd = 6, insertwidth=4, bg = "white", justify = 'right')
         UsernameInput.grid(columnspan=6, row = 1, column = 5)
 
         PasswordInput = tk.Entry(self, font=('arial', 15), show="*", textvariable = self.passwordtext, insertwidth=6, bd = 6, bg = "white", justify = 'right')
         PasswordInput.grid(columnspan=6, row = 2, column = 5)
 
-        # FakeLabel = tk.Label(self, font=('arial', 12), text="   ", fg = "Red", bd = 10, anchor = 'w')
-        # FakeLabel.grid(columnspan=6, row = 4, column = 5, sticky="ew")
 
         ErrorLabel = tk.Label(self, font=('arial', 12), text="Incorrect Username or Password", fg = "Red", bd = 10, anchor = 'w')
         ErrorLabel.grid_forget()
+
+        def CreateAccountClick():
+            ErrorLabel.grid_forget()
+            controller.show_frame("CreateAccountView")
 
         def CheckCredentials():
             LogDB = loginDB()
@@ -160,6 +158,73 @@ class LoginView(tk.Frame):
                 self.passwordtext.set(self.password)
             else:
                 ErrorLabel.grid(columnspan=6, row = 4, column = 5, sticky="ew")
+            LogDB.___del___()
+
+class CreateAccountView(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+
+        self.causernametext = tk.StringVar()
+        self.causername = ""
+        self.capasswordtext = tk.StringVar()
+        self.capassword = ""
+        self.capasswordagaintext = tk.StringVar()
+        self.capasswordagain = ""
+
+        label = tk.Label(self, text="Create Your Account", font=('ariel',35, 'bold'))
+        label.grid(columnspan=4, row = 0, column = 1)
+
+        CAUsernameLabel = tk.Label(self, font=('arial', 20), text="Username: ", fg = "Black", bd = 10, anchor = 'w')
+        CAUsernameLabel.grid(columnspan=4, row = 1, column = 1)
+
+        CAPasswordLabel = tk.Label(self, font=('arial', 20), text="Password: ", fg = "Black", bd = 10, anchor = 'w')
+        CAPasswordLabel.grid(columnspan=4, row = 2, column = 1)
+
+        CADoneButton = tk.Button(self, text="Create",command=lambda: CreateAccount())
+        CADoneButton.grid(columnspan=3, row = 7, column = 5, sticky = "ew")
+
+        ExitButton = tk.Button(self, text="Back",command=lambda: controller.show_frame("LoginView"))
+        ExitButton.grid(columnspan=3, row = 7, column = 8, sticky = "ew")
+
+        CAUsernameInput = tk.Entry(self, font=('arial', 15), textvariable = self.causernametext, bd = 6, insertwidth=4, bg = "white", justify = 'right')
+        CAUsernameInput.grid(columnspan=6, row = 1, column = 5)
+
+        CAPasswordInput = tk.Entry(self, font=('arial', 15), show="*", textvariable = self.capasswordtext, insertwidth=6, bd = 6, bg = "white", justify = 'right')
+        CAPasswordInput.grid(columnspan=6, row = 2, column = 5)
+
+        CAPasswordAgainLabel = tk.Label(self, font=('arial', 20), text="Password: ", fg = "Black", bd = 10, anchor = 'w')
+        CAPasswordAgainLabel.grid(columnspan=4, row = 3, column = 1)
+
+        CAPasswordAgainInput = tk.Entry(self, font=('arial', 15), show="*", textvariable = self.capasswordagaintext, insertwidth=6, bd = 6, bg = "white", justify = 'right')
+        CAPasswordAgainInput.grid(columnspan=6, row = 3, column = 5)
+
+
+        UsernameTakenLabel = tk.Label(self, font=('arial', 12), text="Username Taken", fg = "Red", bd = 10, anchor = 'w')
+        UsernameTakenLabel.grid_forget()
+
+        PasswordNoMatchLabel = tk.Label(self, font=('arial', 12), text="Passwords Do Not Match", fg = "Red", bd = 10, anchor = 'w')
+        PasswordNoMatchLabel.grid_forget()
+
+        def CreateAccount():
+            LogDB = loginDB()
+            username = CAUsernameInput.get()
+            password = CAPasswordInput.get()
+            passwordagain = CAPasswordAgainInput.get()
+            UsernameTakenLabel.grid_forget()
+            PasswordNoMatchLabel.grid_forget()
+            if LogDB.CheckDBUser(username):
+                UsernameTakenLabel.grid(columnspan=6, row = 5, column = 5, sticky="ew")
+                return
+            if not LogDB.CheckDBUser(username) and password == passwordagain:
+                LogDB.addUser(username, password)
+                controller.show_frame("LoginView")
+                self.causernametext.set(self.causername)
+                self.capasswordtext.set(self.capassword)
+                self.capasswordagaintext.set(self.capasswordagain)
+            else:
+                PasswordNoMatchLabel.grid(columnspan=6, row = 5, column = 5, sticky="ew")
             LogDB.___del___()
 
 

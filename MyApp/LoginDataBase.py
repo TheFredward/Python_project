@@ -17,6 +17,10 @@ class loginDB():
             self.cur.execute(" INSERT INTO LoginInfo VALUES (:username, :password)", {'username': newUserName, 'password': newPassword})
             self.connection.commit()
 
+    def CheckDBUser(self, userID):
+        self.cur.execute("SELECT * FROM LoginInfo WHERE username=:username", {'username': userID})
+        return self.cur.fetchall()
+
     def CheckDBCred(self, userID, passCode):
         self.cur.execute("SELECT * FROM LoginInfo WHERE username=:username AND password=:password", {'username': userID, 'password':passCode})
         return self.cur.fetchall()
