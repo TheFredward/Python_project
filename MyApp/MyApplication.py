@@ -5,6 +5,7 @@ import time
 from Dictionary import Dictionary
 import sqlite3
 from LoginDataBase import loginDB
+from capture import capture
 
 class MyApplication(tk.Tk):
 
@@ -113,6 +114,7 @@ class LoginView(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
+
         self.usernametext = tk.StringVar()
         self.username = ""
         self.passwordtext = tk.StringVar()
@@ -129,6 +131,9 @@ class LoginView(tk.Frame):
 
         LoginButton = tk.Button(self, text="Login",command=lambda: CheckCredentials())
         LoginButton.grid(columnspan=3, row = 7, column = 5, sticky = "ew")
+
+        CameraButton = tk.Button(self, text="Face Recognition",command=lambda: ShowCamera())
+        CameraButton.grid(columnspan=6, row = 8, column = 5, sticky = "ew")
 
         CreateButton = tk.Button(self, text="Create Account",command=lambda: CreateAccountClick())
         CreateButton.grid(columnspan=3, row = 7, column = 8, sticky = "ew")
@@ -159,6 +164,10 @@ class LoginView(tk.Frame):
             else:
                 ErrorLabel.grid(columnspan=6, row = 4, column = 5, sticky="ew")
             LogDB.___del___()
+
+        def ShowCamera():
+            CP = capture()
+            CP.get_frame()
 
 class CreateAccountView(tk.Frame):
 
